@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape the Haunted House</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Escape the Haunted House</h1>
+    </header>
+
+    <main>
+        <section id="game">
+            <div id="game-status">
+                <p id="level">Level: 1</p>
+                <p id="score">Score: 0</p>
+            </div>
+            <div id="game-area">
+                <!-- Game content will be injected here dynamically -->
+            </div>
+            <button id="start-game">Start Game</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Escape the Haunted House</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
