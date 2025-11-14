@@ -1,19 +1,24 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    // Pull configuration from config.js
     const settings = {
-        startingLevel: 1,
-        startingScore: 0,
-        maxLevels: 5,
-        maxTime: 30,
+        startingLevel: DEFAULTS.startingLevel,
+        startingScore: DEFAULTS.startingScore,
+        maxLevels: DEFAULTS.maxLevels,
+        maxTime: DEFAULTS.maxTime
     };
 
     let currentLevel = settings.startingLevel;
     let score = settings.startingScore;
     let levelTimeout;
 
+    // Initialize UI with app name from config.js
+    document.querySelector("header h1").textContent = APP_NAME;
+
     function startGame() {
         score = settings.startingScore;
         currentLevel = settings.startingLevel;
+
         updateGameUI();
         nextLevel();
     }
@@ -28,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         updateGameUI();
         startLevelTimer();
+
         currentLevel++;
     }
 
@@ -40,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 nextLevel();
             } else {
                 timer--;
+
                 document.getElementById('game-status').innerHTML = `
                     <p>Level: ${currentLevel}</p>
                     <p>Score: ${score}</p>
@@ -50,14 +57,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function endGame() {
-        alert('Game Over! Your score: ' + score);
+        clearInterval(levelTimeout);
+        alert(`Game Over! Your final score: ${score}`);
     }
 
     function updateGameUI() {
-        document.getElementById('level').textContent = 'Level: ' + currentLevel;
-        document.getElementById('score').textContent = 'Score: ' + score;
+        document.getElementById('level').textContent = `Level: ${currentLevel}`;
+        document.getElementById('score').textContent = `Score: ${score}`;
     }
 
     document.getElementById('start-game').addEventListener('click', startGame);
-
 });
