@@ -1,65 +1,63 @@
-// Quick Settings
-const settings = {
-    startingLevel: 1,
-    startingScore: 0,
-    maxLevels: 5,
-    maxTime: 30, // Time in seconds per level
-};
+document.addEventListener("DOMContentLoaded", () => {
 
-// State
-let currentLevel = settings.startingLevel;
-let score = settings.startingScore;
-let levelTimeout;
+    const settings = {
+        startingLevel: 1,
+        startingScore: 0,
+        maxLevels: 5,
+        maxTime: 30,
+    };
 
-// Game Logic
+    let currentLevel = settings.startingLevel;
+    let score = settings.startingScore;
+    let levelTimeout;
 
-function startGame() {
-    score = settings.startingScore;
-    currentLevel = settings.startingLevel;
-    updateGameUI();
-    nextLevel();
-}
-
-function nextLevel() {
-    if (currentLevel > settings.maxLevels) {
-        endGame();
-        return;
+    function startGame() {
+        score = settings.startingScore;
+        currentLevel = settings.startingLevel;
+        updateGameUI();
+        nextLevel();
     }
 
-    updateGameUI();
-    startLevelTimer();
-}
+    function nextLevel() {
+        clearInterval(levelTimeout);
 
-function startLevelTimer() {
-    const timeLeft = settings.maxTime;
-    let timer = timeLeft;
-    levelTimeout = setInterval(() => {
-        if (timer <= 0) {
-            clearInterval(levelTimeout);
-            nextLevel();
-        } else {
-            timer--;
-            document.getElementById('game-status').innerHTML = `
-                <p>Level: ${currentLevel}</p>
-                <p>Score: ${score}</p>
-                <p>Time Left: ${timer}s</p>
-            `;
+        if (currentLevel > settings.maxLevels) {
+            endGame();
+            return;
         }
-    }, 1000);
-}
 
-function endGame() {
-    alert('Game Over! Your score: ' + score);
-}
+        updateGameUI();
+        startLevelTimer();
+        currentLevel++;
+    }
 
-function updateGameUI() {
-    document.getElementById('level').textContent = 'Level: ' + currentLevel;
-    document.getElementById('score').textContent = 'Score: ' + score;
-}
+    function startLevelTimer() {
+        let timer = settings.maxTime;
 
-// Event Listeners
+        levelTimeout = setInterval(() => {
+            if (timer <= 0) {
+                clearInterval(levelTimeout);
+                nextLevel();
+            } else {
+                timer--;
+                document.getElementById('game-status').innerHTML = `
+                    <p>Level: ${currentLevel}</p>
+                    <p>Score: ${score}</p>
+                    <p>Time Left: ${timer}s</p>
+                `;
+            }
+        }, 1000);
+    }
 
-document.getElementById('start-game').addEventListener('click', startGame);
+    function endGame() {
+        alert('Game Over! Your score: ' + score);
+    }
 
-// Initialize
-startGame();
+    function updateGameUI() {
+        document.getElementById('level').textContent = 'Level: ' + currentLevel;
+        document.getElementById('score').textContent = 'Score: ' + score;
+    }
+
+    document.getElementById('start-game').addEventListener('click', startGame);
+
+});
